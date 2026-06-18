@@ -4,11 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
-const db_1 = require("../db");
+const database_1 = require("../database");
 const models_1 = require("../models");
 async function seed() {
     console.log('Seed the octofit_db database with test data');
-    await (0, db_1.connectToDatabase)();
+    await (0, database_1.connectToDatabase)();
     await Promise.all([
         models_1.ActivityModel.deleteMany({}),
         models_1.LeaderboardModel.deleteMany({}),

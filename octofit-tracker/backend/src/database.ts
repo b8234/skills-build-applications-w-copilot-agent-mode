@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
-import { mongoUri } from './config';
+
+const defaultMongoUri = 'mongodb://127.0.0.1:27017/octofit_db';
+
+export const mongoUri = process.env.MONGODB_URI || defaultMongoUri;
 
 export async function connectToDatabase() {
   if (mongoose.connection.readyState === 1) {

@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const config_1 = require("./config");
-const db_1 = require("./db");
+const database_1 = require("./database");
 const activities_1 = require("./routes/activities");
 const leaderboard_1 = require("./routes/leaderboard");
 const teams_1 = require("./routes/teams");
@@ -30,8 +30,8 @@ app.get('/api/health', (_request, response) => {
 });
 async function connectToDatabase() {
     try {
-        await (0, db_1.connectToDatabase)();
-        console.log(`MongoDB connected at ${config_1.mongoUri}`);
+        await (0, database_1.connectToDatabase)();
+        console.log(`MongoDB connected at ${database_1.mongoUri}`);
     }
     catch (error) {
         console.error('MongoDB connection failed', error);

@@ -1,7 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import { apiBaseUrl, mongoUri, port } from './config';
-import { connectToDatabase as openDatabaseConnection } from './db';
+import { apiBaseUrl, port } from './config';
+import { connectToDatabase as openDatabaseConnection, mongoUri } from './database';
 import { activitiesRouter } from './routes/activities';
 import { leaderboardRouter } from './routes/leaderboard';
 import { teamsRouter } from './routes/teams';
