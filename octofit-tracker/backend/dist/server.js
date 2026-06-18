@@ -5,28 +5,39 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const config_1 = require("./config");
+const db_1 = require("./db");
+const activities_1 = require("./routes/activities");
+const leaderboard_1 = require("./routes/leaderboard");
+const teams_1 = require("./routes/teams");
+const users_1 = require("./routes/users");
+const workouts_1 = require("./routes/workouts");
 const app = (0, express_1.default)();
-const port = Number(process.env.PORT) || 8000;
-const mongoUri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/octofit_db';
 app.use(express_1.default.json());
+app.use('/api/users', users_1.usersRouter);
+app.use('/api/teams', teams_1.teamsRouter);
+app.use('/api/activities', activities_1.activitiesRouter);
+app.use('/api/leaderboard', leaderboard_1.leaderboardRouter);
+app.use('/api/workouts', workouts_1.workoutsRouter);
 app.get('/api/health', (_request, response) => {
     response.json({
         status: 'ok',
-        port,
+        apiBaseUrl: config_1.apiBaseUrl,
+        port: config_1.port,
         database: mongoose_1.default.connection.name || 'octofit_db',
         mongoState: mongoose_1.default.connection.readyState,
     });
 });
 async function connectToDatabase() {
     try {
-        await mongoose_1.default.connect(mongoUri);
-        console.log(`MongoDB connected at ${mongoUri}`);
+        await (0, db_1.connectToDatabase)();
+        console.log(`MongoDB connected at ${config_1.mongoUri}`);
     }
     catch (error) {
         console.error('MongoDB connection failed', error);
     }
 }
-app.listen(port, () => {
-    console.log(`OctoFit backend listening on http://localhost:${port}`);
+app.listen(config_1.port, () => {
+    console.log(`OctoFit backend listening on http://localhost:${config_1.port}`);
 });
 void connectToDatabase();
